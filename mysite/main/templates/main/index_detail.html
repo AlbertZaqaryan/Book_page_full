@@ -1,0 +1,13 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Detail{% endblock %}
+
+{% block name %}Detail{% endblock %}
+
+{% block content %}
+    {% for i in author_list %}
+        {% for j in i.cat_author.all %}
+            <p><a href="{% url 'index_detail_book' j.id %}">{{ j.name }}</a></p>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}

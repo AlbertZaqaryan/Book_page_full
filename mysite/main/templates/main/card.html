@@ -1,0 +1,34 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Shop cart page{% endblock %}
+
+{% block name %}Sholy Cart page{% endblock %}
+
+{% block content %}
+ <section class="cart-items">
+    {% for i in cart_list %}
+      <div class="cart-item">
+        <img src="{{ i.prod.img.url }}" width="100px" alt="Product 1" />
+        <div class="cart-item-details">
+          <h2>{{ i.prod.name }}</h2>
+          <p>${{ i.prod.price }}</p>
+        </div>
+        <form action="{% url 'delete_prod' %}" method="post">
+            {% csrf_token %}
+            <button name="id" value="{{ i.id }}" class="remove-button">Remove</button>
+        </form>
+      </div>
+    {% endfor %}
+    </section>
+    <section class="cart-summary">
+      <h2>Cart Summary</h2>
+      <table>
+        <tr>
+          <th>Total</th>
+          <td>${{ summ }}</td>
+        </tr>
+      </table>
+      <button class="checkout-button">Checkout</button>
+    </section>
+
+{% endblock %}

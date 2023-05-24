@@ -1,0 +1,22 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Detail{% endblock %}
+
+{% block name %}Detail{% endblock %}
+
+{% block content %}
+    {% for i in book_list %}
+        {% for j in i.book_author.all %}
+            <h4>{{ j.name }}</h4>
+            <img src="{{ j.img.url }}" width="300px" alt="">
+            <h5>{{ j.price }}</h5>
+            <p>{{ j.about }}</p> 
+            <form action="{% url 'card' %}" method="post">
+                {% csrf_token %}
+                <button name="id" value="{{ i.id }}">Add to Cart</button>
+            </form>
+            <hr>   
+
+        {% endfor %}
+    {% endfor %}
+{% endblock %}

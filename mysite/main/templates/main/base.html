@@ -1,0 +1,61 @@
+{% load i18n %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<header>
+    <div id="myDIV">
+        <a href="{% url 'index' %}"><Button class="btn {% if link == 'index' %}active{% endif %}">Home</Button></a>
+        <a href="{% url 'contact' %}"><Button class="btn {% if link == 'contact' %}active{% endif %}">Contact</Button></a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}"><Button class="btn">{{ user.username }} - Logout</Button></a>
+        {% else %}
+            <a href="{% url 'login' %}"><Button class="btn {% if link == 'login' %}active{% endif %}">Login</Button></a>
+            <a href="{% url 'register' %}"><Button class="btn {% if link == 'register' %}active{% endif %}">Register</Button></a>
+        {% endif %}
+        <a href="{% url 'card' %}"><Button class="btn {% if link == 'card' %}active{% endif %}">Card</Button></a>
+      </div>
+      <li>
+        <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+            <input name="next" type="hidden" value="{{ redirect_to }}">
+        <select name="language">
+            {% get_current_language as LANGUAGE_CODE %}
+            {% get_available_languages as LANGUAGES %}
+            {% get_language_info_list for LANGUAGES as languages %}{% for language in languages %}
+        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %}
+        selected{% endif %}>
+            {{ language.name_local }} ({{ language.code }})
+        </option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Go">
+        </form>
+        </li>
+   
+    <h1>{% block name %}{% endblock %}</h1>
+    <hr>
+    <br>
+</header>
+<body>
+    {% block content %}{% endblock %}
+</body>
+
+<footer>
+    <hr>
+    <br>
+    <br>
+    <ul>
+        <li>Author - Caik</li>
+        <li>Contact US - 077777777</li>
+        <li>Address - Gexanist</li>
+    </ul>
+    <script src="{% static 'js/script.js' %}"></script>
+</footer>
+</html>

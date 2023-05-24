@@ -1,0 +1,14 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block name %}Contact{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="contact_email" value="{{ user.email }}" id="">
+        <input type="text" name="review" placeholder="Review">
+        <button type="submit">Send</button>
+    </form>
+{% endblock %}
